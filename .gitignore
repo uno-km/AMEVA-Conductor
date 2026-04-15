@@ -1,0 +1,59 @@
+# Python artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+*.pyi
+.pytest_cache/
+.pyre/
+.mypy_cache/
+.pytype
+coverage.xml
+htmlcov/
+.nox/
+
+# Virtual environments
+venv/
+ENV/
+env/
+.venv/
+
+# IDE / editor
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# JetBrains
+*.iml
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs and databases
+*.log
+*.sqlite3
+*.db
+*.db-journal
+
+# Package files
+*.egg-info/
+*.eggs/
+dist/
+build/
+
+# Local secrets / environment
+.env
+*.env
+secrets.json
+local_settings.py
+settings.py
+token.txt
+
+# Misc
+.ipynb_checkpoints/
+*.swp
+*.swo
