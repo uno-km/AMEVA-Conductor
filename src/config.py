@@ -2,7 +2,6 @@ import ast
 import os
 import json
 
-
 def load_env_file(path: str = ".env"):
     if not os.path.exists(path):
         return
@@ -16,23 +15,24 @@ def load_env_file(path: str = ".env"):
             if key and value:
                 os.environ.setdefault(key, value)
 
-
+def get_env_as_dict(key: str, default: str = "{}") -> dict:
+    val = os.environ.get(key, default)
+    try:
+        # dict 형태의 문자열을 안전하게 파싱 후 key를 소문자로 변환
+        parsed = ast.literal_eval(val)
+        return {str(k).lower(): v for k, v in parsed.items()} if isinstance(parsed, dict) else {}
+    except (ValueError, SyntaxError):
+        return {}
+    
 load_env_file()
 
+# 기본값들
 BOT_TOKEN = os.environ.get("AMEVA_BOT_TOKEN")
 MY_CHAT_ID = int(os.environ.get("AMEVA_MY_CHAT_ID", "0"))
 
-project_map_value = os.environ.get("PROJECT_MAP", "{}")
-if isinstance(project_map_value, str):
-    try:
-        project_map_value = ast.literal_eval(project_map_value)
-    except Exception:
-        project_map_value = {}
-
-PROJECT_MAP = {
-    str(k).lower(): v
-    for k, v in (project_map_value.items() if isinstance(project_map_value, dict) else {})
-}
+current_target = "오케스트라"
+PROJECT_MAP = get_env_as_dict("PROJECT_MAP")
+PROJECT_PATHS = get_env_as_dict("PROJECT_PATHS")
 
 if not BOT_TOKEN:
     raise SystemExit("환경 변수 AMEVA_BOT_TOKEN을 설정하세요.")
@@ -42,14 +42,6 @@ PROJECTS_FILE = os.path.join(os.getcwd(), "projects.json")
 CMD_LOG_FILE = os.path.join(os.getcwd(), "cmd.log")
 GIT_LOG_FILE = os.path.join(os.getcwd(), "git.log")
 CMD_SAFE_MODE = os.environ.get("CMD_SAFE_MODE", "false").lower() in ("1", "true", "yes", "on")
-
-# 기본값들
-current_target = "오케스트라"
-PROJECT_PATHS = {
-    "AMEVA": r"C:\ameva\AMEVA-Doc-AI",
-    "오케스트라": r"C:\ameva\Orchestra",
-    "벤치마크": r"C:\ameva\Benchmark"
-}
 
 # In-memory registry (populated from projects.json)
 PROJECT_AMP = {}
