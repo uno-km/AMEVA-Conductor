@@ -38,6 +38,7 @@ desktop.ini
 *.sqlite3
 *.db
 *.db-journal
+projects.json
 
 # Package files
 *.egg-info/
