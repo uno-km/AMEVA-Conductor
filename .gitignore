@@ -58,3 +58,13 @@ token.txt
 .ipynb_checkpoints/
 *.swp
 *.swo
+
+.env.*
+*.env.*
+.env.local
+.env.prd
+.env.dev
+.env.docker
+secrets/
+*.pem
+*.key
